@@ -6,6 +6,7 @@ use teloxide::{dispatching::dialogue::GetChatId, prelude::*, repls::CommandReplE
 enum Command {
     Sleep,
     CheckLoad,
+    Ping,
 }
 
 async fn answer(bot: Bot, msg: Message, cmd: Command) -> ResponseResult<()> {
@@ -32,6 +33,11 @@ async fn answer(bot: Bot, msg: Message, cmd: Command) -> ResponseResult<()> {
             };
             if let Some(chat) = msg.chat_id() {
                 bot.send_message(chat, response).await?;
+            }
+        },
+        Command::Ping => {
+            if let Some(chat) = msg.chat_id() {
+                bot.send_message(chat, "pong").await?;
             }
         }
     };
